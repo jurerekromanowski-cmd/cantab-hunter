@@ -38,7 +38,6 @@ const countryFlags = {
 
 // --- GLOBALNE ---
 let allItems = [];
-let visibleItemsCount = 0;
 
 
 // --- LAZY LOADING ---
@@ -60,6 +59,7 @@ fetch("data.json?v=" + Date.now())
     allItems = data;
     generateDynamicFilters(data);
     renderGallery(allItems);
+    updateStatsPanel(allItems);   // statystyki NA DOLE
     attachFilterEvents();
   });
 
@@ -123,6 +123,7 @@ function renderGallery(items) {
     const div = document.createElement("div");
     div.className = "item";
 
+    // dataset do filtrowania
     div.dataset.tabcolor = item.tabColor || "";
     div.dataset.tabtype = item.tabType || "";
     div.dataset.lidcolor = item.lidColor || "";
@@ -130,14 +131,20 @@ function renderGallery(items) {
     div.dataset.company = item.company || "";
     div.dataset.country = item.country || "";
 
+    // obrazek
     const img = document.createElement("img");
     img.dataset.src = item.url;
     lazyObserver.observe(img);
 
+    // flaga
     const flag = countryFlags[item.country] || "🏳️";
 
+    // podpis katalogowy
     const caption = document.createElement("p");
-    caption.innerHTML = `${item.company || "Unknown"}<br>${flag}`;
+    caption.innerHTML = `
+      <strong>${item.company || "Unknown"}</strong>
+      ${flag} — ${item.tabColor || "unknown"} tab
+    `;
 
     div.appendChild(img);
     div.appendChild(caption);
@@ -145,7 +152,6 @@ function renderGallery(items) {
   });
 
   applyFilters();
-  updateStatsPanel(items); // teraz statystyki są NA DOLE
 }
 
 
@@ -166,7 +172,6 @@ function applyFilters() {
   };
 
   const items = document.querySelectorAll(".item");
-  let shown = 0;
 
   items.forEach(item => {
     const match =
@@ -178,14 +183,11 @@ function applyFilters() {
       (filters.country.length === 0 || filters.country.includes(item.dataset.country));
 
     item.classList.toggle("hidden", !match);
-    if (match) shown++;
   });
-
-  visibleItemsCount = shown;
 }
 
 
-// --- PANEL STATYSTYK (NA DOLE) ---
+// --- STATYSTYKI ---
 function updateStatsPanel(data) {
   const stats = {
     kraje: new Set(),
