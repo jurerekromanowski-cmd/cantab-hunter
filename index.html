@@ -7,40 +7,32 @@
 </head>
 <body>
 
-  <h1>Cantab Hunter</h1>
+<h1>Cantab Hunter</h1>
 
-  <div id="filters">
-    <div id="filters">
-    <select id="filterTabColor">
-      <option value="">Tab color</option>
-    </select>
+<div id="statsPanel"></div>
 
-    <select id="filterTabType">
-      <option value="">Tab type</option>
-    </select>
+<div id="filters">
+  <input type="text" id="searchInput" placeholder="Szukaj: firma, kraj, kolor…">
 
-    <select id="filterLidColor">
-      <option value="">Lid color</option>
-    </select>
+  <select id="sortSelect">
+    <option value="">Sortowanie: brak</option>
+    <option value="company">Firma A→Z</option>
+    <option value="country">Kraj A→Z</option>
+    <option value="tabColor">Kolor zawleczki A→Z</option>
+  </select>
 
-    <select id="filterLidSize">
-      <option value="">Lid size</option>
-    </select>
+  <div id="filterTabColor" class="filter-group"></div>
+  <div id="filterTabType" class="filter-group"></div>
+  <div id="filterLidColor" class="filter-group"></div>
+  <div id="filterLidSize" class="filter-group"></div>
+  <div id="filterCompany" class="filter-group"></div>
+  <div id="filterCountry" class="filter-group"></div>
+</div>
 
-    <select id="filterStatus">
-      <option value="">Status</option>
-    </select>
+<div id="resultsCount"></div>
 
-    <select id="filterCountry">
-      <option value="">Country</option>
-    </select>
-  </div>
+<div id="gallery"></div>
 
-  </div>
-
-  <div id="gallery"></div>
-
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
-
