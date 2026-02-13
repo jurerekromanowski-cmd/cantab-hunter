@@ -67,9 +67,7 @@ fetch("data.json?v=" + Date.now())
 // --- GENEROWANIE CHECKBOXÓW ---
 function createCheckboxGroup(containerId, title, values, name) {
   const container = document.getElementById(containerId);
-  const h3 = document.createElement("h3");
-  h3.textContent = title;
-  container.appendChild(h3);
+  
 
   values.forEach(v => {
     const label = document.createElement("label");
