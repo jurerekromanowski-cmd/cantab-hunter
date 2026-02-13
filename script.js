@@ -168,7 +168,15 @@ function applyFilters() {
     company: getCheckedValues("company"),
     country: getCheckedValues("country")
   };
-
+const filters = {
+  tabColor: getCheckedValues("tabColor"),
+  tabType: getCheckedValues("tabType"),
+  lidColor: getCheckedValues("lidColor"),
+  lidSize: getCheckedValues("lidSize"),
+  company: getCheckedValues("company"),
+  country: getCheckedValues("country")
+};
+  
   const items = document.querySelectorAll(".item");
 
   items.forEach(item => {
