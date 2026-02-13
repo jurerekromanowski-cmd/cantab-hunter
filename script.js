@@ -74,12 +74,15 @@ function renderGallery(items) {
   gallery.innerHTML = "";
 
   items.forEach(item => {
-    const img = document.createElement("img");
-    img.src = item.url; // zakładam, że masz pole "url" z pełnym linkiem R2
-    img.alt = item.filename;
-    img.className = "thumb";
+    const div = document.createElement("div");
+    div.className = "item";
 
-    gallery.appendChild(img);
+    const img = document.createElement("img");
+    img.src = item.url;
+    img.alt = item.filename;
+
+    div.appendChild(img);
+    gallery.appendChild(div);
   });
 }
 
