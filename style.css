@@ -84,6 +84,12 @@ body {
   transform: scale(1.2);
   margin-right: 6px;
 }
+/* Podświetlenie aktywnych filtrów */
+.filterBox summary.active {
+  color: #0077cc;
+}
+
+
 
 /* --- GALERIA --- */
 #gallery {
