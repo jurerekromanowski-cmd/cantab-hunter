@@ -168,15 +168,15 @@ function applyFilters() {
     company: getCheckedValues("company"),
     country: getCheckedValues("country")
   };
-const filters = {
-  tabColor: getCheckedValues("tabColor"),
-  tabType: getCheckedValues("tabType"),
-  lidColor: getCheckedValues("lidColor"),
-  lidSize: getCheckedValues("lidSize"),
-  company: getCheckedValues("company"),
-  country: getCheckedValues("country")
-};
-  
+
+  // Podświetlanie aktywnych filtrów
+  document.querySelectorAll(".filterBox").forEach(box => {
+    const inputs = box.querySelectorAll("input[type='checkbox']");
+    const anyChecked = [...inputs].some(cb => cb.checked);
+    const summary = box.querySelector("summary");
+    summary.classList.toggle("active", anyChecked);
+  });
+
   const items = document.querySelectorAll(".item");
 
   items.forEach(item => {
