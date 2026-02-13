@@ -7,6 +7,11 @@ const countryFlags = {
   "UK": "🇬🇧",
   "United Kingdom": "🇬🇧",
   "France": "🇫🇷",
+  "Kazakstan": "KZ"
+  "Iran": "IR"
+"Saudi Arabia": "SA"
+"South Korea": "KR"
+"Uzbekistan": "UZ"
   "Spain": "🇪🇸",
   "Italy": "🇮🇹",
   "Canada": "🇨🇦",
