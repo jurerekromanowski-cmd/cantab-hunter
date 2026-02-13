@@ -30,6 +30,11 @@ body {
   margin-bottom: 30px;
 }
 
+#filters h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
 /* --- SIATKA FILTRÓW --- */
 #filtersGrid {
   display: grid;
