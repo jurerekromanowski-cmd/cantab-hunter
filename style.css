@@ -4,6 +4,13 @@
   padding: 0;
   box-sizing: border-box;
 }
+#galleryTitle {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 20px 0 15px;
+  text-align: center;
+}
+
 
 body {
   font-family: system-ui, sans-serif;
