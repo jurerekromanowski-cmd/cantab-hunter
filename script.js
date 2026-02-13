@@ -60,8 +60,6 @@ fetch("data.json?v=" + Date.now())
     allItems = data;
     generateDynamicFilters(data);
     renderGallery(allItems);
-    updateStatsPanel(data);
-    updateResultsCount();
     attachFilterEvents();
   });
 
@@ -147,28 +145,7 @@ function renderGallery(items) {
   });
 
   applyFilters();
-}
-
-
-// --- WYSZUKIWARKA ---
-function matchesSearch(item, text) {
-  if (!text) return true;
-  text = text.toLowerCase();
-
-  return (
-    item.dataset.company.toLowerCase().includes(text) ||
-    item.dataset.country.toLowerCase().includes(text) ||
-    item.dataset.tabcolor.toLowerCase().includes(text)
-  );
-}
-
-
-// --- SORTOWANIE ---
-function sortItems(items, key) {
-  if (!key) return items;
-  return [...items].sort((a, b) =>
-    (a[key] || "").localeCompare(b[key] || "")
-  );
+  updateStatsPanel(items); // teraz statystyki są NA DOLE
 }
 
 
@@ -179,9 +156,6 @@ function getCheckedValues(name) {
 }
 
 function applyFilters() {
-  const searchText = document.getElementById("searchInput").value.trim();
-  const sortKey = document.getElementById("sortSelect").value;
-
   const filters = {
     tabColor: getCheckedValues("tabColor"),
     tabType: getCheckedValues("tabType"),
@@ -201,19 +175,17 @@ function applyFilters() {
       (filters.lidColor.length === 0 || filters.lidColor.includes(item.dataset.lidcolor)) &&
       (filters.lidSize.length === 0 || filters.lidSize.includes(item.dataset.lidsize)) &&
       (filters.company.length === 0 || filters.company.includes(item.dataset.company)) &&
-      (filters.country.length === 0 || filters.country.includes(item.dataset.country)) &&
-      matchesSearch(item, searchText);
+      (filters.country.length === 0 || filters.country.includes(item.dataset.country));
 
     item.classList.toggle("hidden", !match);
     if (match) shown++;
   });
 
   visibleItemsCount = shown;
-  updateResultsCount();
 }
 
 
-// --- PANEL STATYSTYK ---
+// --- PANEL STATYSTYK (NA DOLE) ---
 function updateStatsPanel(data) {
   const stats = {
     kraje: new Set(),
@@ -236,20 +208,8 @@ function updateStatsPanel(data) {
 }
 
 
-// --- LICZNIK ---
-function updateResultsCount() {
-  const total = allItems.length;
-  const visible = visibleItemsCount || total;
-  document.getElementById("resultsCount").textContent =
-    `Wyświetlono ${visible} z ${total}`;
-}
-
-
 // --- ZDARZENIA ---
 function attachFilterEvents() {
-  document.getElementById("searchInput").addEventListener("input", applyFilters);
-  document.getElementById("sortSelect").addEventListener("change", applyFilters);
-
   document.querySelectorAll('#filters input[type="checkbox"]').forEach(cb =>
     cb.addEventListener("change", applyFilters)
   );
