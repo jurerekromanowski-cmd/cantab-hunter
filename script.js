@@ -150,7 +150,8 @@ const countryFlags = {
   "Paraguay": "🇵🇾",
   "Peru": "🇵🇪",
   "Philippines": "🇵🇭",
-  "Poland
+ "Poland": "🇵🇱",
+
  "Portugal": "🇵🇹",
 
   "Qatar": "🇶🇦",
