@@ -30,7 +30,41 @@ body {
 }
 /* --- SIATKA FILTRÓW --- */
 #filtersGrid 
+/* --- ZWIJANE OKIENKA FILTRÓW --- */
+.filterBox {
+  background: #fafafa;
+  border-radius: 12px;
+  border: 1px solid #eee;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  overflow: hidden;
+}
 
+.filterBox summary {
+  padding: 12px 15px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  list-style: none;
+}
+
+.filterBox summary::-webkit-details-marker {
+  display: none;
+}
+
+.filterBox[open] summary {
+  border-bottom: 1px solid #ddd;
+}
+
+.filterBox div {
+  padding: 12px 15px;
+}
+
+.filterBox label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  opacity: 0.85;
+}
 /* --- POJEDYNCZE OKIENKA FILTRÓW --- */
 #filtersGrid > div {
   background: #fafafa;
