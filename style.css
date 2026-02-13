@@ -36,9 +36,12 @@ h1 {
   text-align: center;
 }
 
+/* --- KLUCZOWA ZMIANA: miniatury nie są przycinane --- */
 .item img {
   width: 100%;
-  height: auto;
+  height: 180px;        /* stała wysokość miniatury */
+  object-fit: contain;  /* całe zdjęcie widoczne, nic nie ucinamy */
+  background: #fff;     /* ładne tło pod zdjęciem */
   display: block;
 }
 
