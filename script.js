@@ -1,154 +1,45 @@
 // --- MAPA FLAG KRAJÓW ---
 const countryFlags = {
-  "Afghanistan": "🇦🇫",
-  "Albania": "🇦🇱",
-  "Algeria": "🇩🇿",
-  "Andorra": "🇦🇩",
-  "Angola": "🇦🇴",
-  "Antigua and Barbuda": "🇦🇬",
-  "Argentina": "🇦🇷",
-  "Armenia": "🇦🇲",
-  "Australia": "🇦🇺",
-  "Austria": "🇦🇹",
-  "Azerbaijan": "🇦🇿",
-  "Belarus": "🇧🇾",
-  "Belgium": "🇧🇪",
-   "Bolivia": "🇧🇴",
-  "Bosnia and Herzegovina": "🇧🇦",
-    "Brazil": "🇧🇷",
-    "Bulgaria": "🇧🇬",
-  "Cambodia": "🇰🇭",
-  "Cameroon": "🇨🇲",
-  "Canada": "🇨🇦",
-  "Chile": "🇨🇱",
-  "China": "🇨🇳",
-  "Colombia": "🇨🇴",
-   "Costa Rica": "🇨🇷",
-  "Croatia": "🇭🇷",
-  "Cuba": "🇨🇺",
-  "Cyprus": "🇨🇾",
-  "Czech Republic": "🇨🇿",
-  "Denmark": "🇩🇰",
-  "Egypt": "🇪🇬",
-   "Estonia": "🇪🇪",
-  "Finland": "🇫🇮",
-  "France": "🇫🇷",
-  "Georgia": "🇬🇪",
-  "Germany": "🇩🇪",
-  "Ghana": "🇬🇭",
-  "Greece": "🇬🇷",
-  "Grenada": "🇬🇩",
-  "Guatemala": "🇬🇹",
-  "Hungary": "🇭🇺",
-  "Iceland": "🇮🇸",
-  "India": "🇮🇳",
-  "Indonesia": "🇮🇩",
-  "Iran": "🇮🇷",
-  "Iraq": "🇮🇶",
-  "Ireland": "🇮🇪",
-  "Israel": "🇮🇱",
-  "Italy": "🇮🇹",
-  "Jamaica": "🇯🇲",
-  "Japan": "🇯🇵",
-  "Jordan": "🇯🇴",
-  "Kazakhstan": "🇰🇿",
-  "Kenya": "🇰🇪",
-  "Kuwait": "🇰🇼",
-  "Kyrgyzstan": "🇰🇬",
-  "Laos": "🇱🇦",
-  "Latvia": "🇱🇻",
-  "Lebanon": "🇱🇧",
-  "Lithuania": "🇱🇹",
-    "Madagascar": "🇲🇬",
-  "Malaysia": "🇲🇾",
-  "Mali": "🇲🇱",
-  "Malta": "🇲🇹",
-  "Mexico": "🇲🇽",
-  "Moldova": "🇲🇩",
-  "Mongolia": "🇲🇳",
-  "Montenegro": "🇲🇪",
-  "Morocco": "🇲🇦",
-  "Mozambique": "🇲🇿",
-  "Namibia": "🇳🇦",
-  "Nepal": "🇳🇵",
-  "Netherlands": "🇳🇱",
-  "New Zealand": "🇳🇿",
-  "Nicaragua": "🇳🇮",
-   "North Korea": "🇰🇵",
-  "North Macedonia": "🇲🇰",
-  "Norway": "🇳🇴",
-  "Oman": "🇴🇲",
-  "Pakistan": "🇵🇰",
-  "Panama": "🇵🇦",
-   "Paraguay": "🇵🇾",
-  "Peru": "🇵🇪",
-  "Philippines": "🇵🇭",
- "Poland": "🇵🇱",
- "Portugal": "🇵🇹",
-  "Qatar": "🇶🇦",
-  "Romania": "🇷🇴",
-  "Russia": "🇷🇺",
-  "San Marino": "🇸🇲",
-  "Sao Tome and Principe": "🇸🇹",
-  "Saudi Arabia": "🇸🇦",
-  "Senegal": "🇸🇳",
-  "Serbia": "🇷🇸",
-  "Seychelles": "🇸🇨",
-  "Slovakia": "🇸🇰",
-  "Slovenia": "🇸🇮",
-  "South Africa": "🇿🇦",
-  "South Korea": "🇰🇷",
-  "South Sudan": "🇸🇸",
-  "Spain": "🇪🇸",
-  "Sri Lanka": "🇱🇰",
-  "Sudan": "🇸🇩",
-  "Suriname": "🇸🇷",
-  "Sweden": "🇸🇪",
-  "Switzerland": "🇨🇭",
-  "Syria": "🇸🇾",
-  "Taiwan": "🇹🇼",
-  "Tajikistan": "🇹🇯",
-  "Tanzania": "🇹🇿",
-  "Thailand": "🇹🇭",
-   "Tunisia": "🇹🇳",
-  "Turkey": "🇹🇷",
-  "Turkmenistan": "🇹🇲",
-  "Ukraine": "🇺🇦",
-  "United Arab Emirates": "🇦🇪",
-  "United Kingdom": "🇬🇧",
-  "United States": "🇺🇸",
-  "Uruguay": "🇺🇾",
-  "Uzbekistan": "🇺🇿",
-   "Venezuela": "🇻🇪",
-  "Vietnam": "🇻🇳",
-  "Yemen": "🇾🇪",
-  "Zambia": "🇿🇲",
-  "Zimbabwe": "🇿🇼"
+  "Afghanistan": "🇦🇫", "Albania": "🇦🇱", "Algeria": "🇩🇿", "Andorra": "🇦🇩",
+  "Angola": "🇦🇴", "Antigua and Barbuda": "🇦🇬", "Argentina": "🇦🇷",
+  "Armenia": "🇦🇲", "Australia": "🇦🇺", "Austria": "🇦🇹", "Azerbaijan": "🇦🇿",
+  "Belarus": "🇧🇾", "Belgium": "🇧🇪", "Bolivia": "🇧🇴",
+  "Bosnia and Herzegovina": "🇧🇦", "Brazil": "🇧🇷", "Bulgaria": "🇧🇬",
+  "Cambodia": "🇰🇭", "Cameroon": "🇨🇲", "Canada": "🇨🇦", "Chile": "🇨🇱",
+  "China": "🇨🇳", "Colombia": "🇨🇴", "Costa Rica": "🇨🇷", "Croatia": "🇭🇷",
+  "Cuba": "🇨🇺", "Cyprus": "🇨🇾", "Czech Republic": "🇨🇿", "Denmark": "🇩🇰",
+  "Egypt": "🇪🇬", "Estonia": "🇪🇪", "Finland": "🇫🇮", "France": "🇫🇷",
+  "Georgia": "🇬🇪", "Germany": "🇩🇪", "Ghana": "🇬🇭", "Greece": "🇬🇷",
+  "Grenada": "🇬🇩", "Guatemala": "🇬🇹", "Hungary": "🇭🇺", "Iceland": "🇮🇸",
+  "India": "🇮🇳", "Indonesia": "🇮🇩", "Iran": "🇮🇷", "Iraq": "🇮🇶",
+  "Ireland": "🇮🇪", "Israel": "🇮🇱", "Italy": "🇮🇹", "Jamaica": "🇯🇲",
+  "Japan": "🇯🇵", "Jordan": "🇯🇴", "Kazakhstan": "🇰🇿", "Kenya": "🇰🇪",
+  "Kuwait": "🇰🇼", "Kyrgyzstan": "🇰🇬", "Laos": "🇱🇦", "Latvia": "🇱🇻",
+  "Lebanon": "🇱🇧", "Lithuania": "🇱🇹", "Madagascar": "🇲🇬", "Malaysia": "🇲🇾",
+  "Mali": "🇲🇱", "Malta": "🇲🇹", "Mexico": "🇲🇽", "Moldova": "🇲🇩",
+  "Mongolia": "🇲🇳", "Montenegro": "🇲🇪", "Morocco": "🇲🇦", "Mozambique": "🇲🇿",
+  "Namibia": "🇳🇦", "Nepal": "🇳🇵", "Netherlands": "🇳🇱", "New Zealand": "🇳🇿",
+  "Nicaragua": "🇳🇮", "North Korea": "🇰🇵", "North Macedonia": "🇲🇰",
+  "Norway": "🇳🇴", "Oman": "🇴🇲", "Pakistan": "🇵🇰", "Panama": "🇵🇦",
+  "Paraguay": "🇵🇾", "Peru": "🇵🇪", "Philippines": "🇵🇭", "Poland": "🇵🇱",
+  "Portugal": "🇵🇹", "Qatar": "🇶🇦", "Romania": "🇷🇴", "Russia": "🇷🇺",
+  "San Marino": "🇸🇲", "Sao Tome and Principe": "🇸🇹", "Saudi Arabia": "🇸🇦",
+  "Senegal": "🇸🇳", "Serbia": "🇷🇸", "Seychelles": "🇸🇨", "Slovakia": "🇸🇰",
+  "Slovenia": "🇸🇮", "South Africa": "🇿🇦", "South Korea": "🇰🇷",
+  "South Sudan": "🇸🇸", "Spain": "🇪🇸", "Sri Lanka": "🇱🇰", "Sudan": "🇸🇩",
+  "Suriname": "🇸🇷", "Sweden": "🇸🇪", "Switzerland": "🇨🇭", "Syria": "🇸🇾",
+  "Taiwan": "🇹🇼", "Tajikistan": "🇹🇯", "Tanzania": "🇹🇿", "Thailand": "🇹🇭",
+  "Tunisia": "🇹🇳", "Turkey": "🇹🇷", "Turkmenistan": "🇹🇲", "Ukraine": "🇺🇦",
+  "United Arab Emirates": "🇦🇪", "United Kingdom": "🇬🇧", "United States": "🇺🇸",
+  "Uruguay": "🇺🇾", "Uzbekistan": "🇺🇿", "Venezuela": "🇻🇪", "Vietnam": "🇻🇳",
+  "Yemen": "🇾🇪", "Zambia": "🇿🇲", "Zimbabwe": "🇿🇼"
 };
 
-   
-// --- WCZYTYWANIE JSON ---
-fetch("data.json?v=" + Date.now())
-  .then(response => response.json())
-  .then(data => {
-    window.allItems = data;
-    renderGallery(data);
-    populateFilters(data);
-  });
 
-// --- RENDEROWANIE GALERII ---
-function renderGallery(items) {
-  const gallery = document.getElementById("gallery");
-  gallery.innerHTML = "";
-
-  items.forEach(item => {
-    const div = document.createElement("div");
-    div.className = "item";
-/
-};
 // --- GLOBALNE ---
 let allItems = [];
 let visibleItemsCount = 0;
+
 
 // --- LAZY LOADING ---
 const lazyObserver = new IntersectionObserver((entries, observer) => {
@@ -161,6 +52,7 @@ const lazyObserver = new IntersectionObserver((entries, observer) => {
   });
 }, { rootMargin: "200px", threshold: 0.1 });
 
+
 // --- WCZYTYWANIE JSON ---
 fetch("data.json?v=" + Date.now())
   .then(r => r.json())
@@ -172,6 +64,7 @@ fetch("data.json?v=" + Date.now())
     updateResultsCount();
     attachFilterEvents();
   });
+
 
 // --- GENEROWANIE CHECKBOXÓW ---
 function createCheckboxGroup(containerId, title, values, name) {
@@ -222,6 +115,7 @@ function generateDynamicFilters(data) {
   createCheckboxGroup("filterCountry", "Kraj", [...sets.country], "country");
 }
 
+
 // --- RENDER GALERII ---
 function renderGallery(items) {
   const gallery = document.getElementById("gallery");
@@ -255,6 +149,7 @@ function renderGallery(items) {
   applyFilters();
 }
 
+
 // --- WYSZUKIWARKA ---
 function matchesSearch(item, text) {
   if (!text) return true;
@@ -267,6 +162,7 @@ function matchesSearch(item, text) {
   );
 }
 
+
 // --- SORTOWANIE ---
 function sortItems(items, key) {
   if (!key) return items;
@@ -274,6 +170,7 @@ function sortItems(items, key) {
     (a[key] || "").localeCompare(b[key] || "")
   );
 }
+
 
 // --- FILTROWANIE ---
 function getCheckedValues(name) {
@@ -315,6 +212,7 @@ function applyFilters() {
   updateResultsCount();
 }
 
+
 // --- PANEL STATYSTYK ---
 function updateStatsPanel(data) {
   const stats = {
@@ -337,6 +235,7 @@ function updateStatsPanel(data) {
   `;
 }
 
+
 // --- LICZNIK ---
 function updateResultsCount() {
   const total = allItems.length;
@@ -344,6 +243,7 @@ function updateResultsCount() {
   document.getElementById("resultsCount").textContent =
     `Wyświetlono ${visible} z ${total}`;
 }
+
 
 // --- ZDARZENIA ---
 function attachFilterEvents() {
@@ -354,6 +254,3 @@ function attachFilterEvents() {
     cb.addEventListener("change", applyFilters)
   );
 }
-
-   
-
