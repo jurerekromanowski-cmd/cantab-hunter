@@ -1,79 +1,93 @@
-let items = [];
+// ===============================
+// Wczytanie danych z JSON
+// ===============================
 
-function loadGallery() {
-  fetch('data.json')
-    .then(r => r.json())
-    .then(data => {
-      items = data;
-      populateFilters(data);
-      renderGallery(data);
-    });
-}
+let allItems = [];
+
+fetch("data.json")
+  .then(response => response.json())
+  .then(data => {
+    allItems = data;
+    populateFilters(allItems);
+    renderGallery(allItems);
+  });
+
+// ===============================
+// Automatyczne wypełnianie filtrów
+// ===============================
 
 function populateFilters(data) {
-  fillSelect("filter-tab-color", unique(data.map(i => i.tab_color)));
-  fillSelect("filter-tab-type", unique(data.map(i => i.tab_type)));
-  fillSelect("filter-year", unique(data.map(i => i.year)));
-  fillSelect("filter-brand", unique(data.map(i => i.brand)));
-  fillSelect("filter-production-country", unique(data.map(i => i.production_country)));
+  const fields = {
+    filterTabColor: "tabColor",   // C
+    filterTabType: "tabType",     // E
+    filterLidColor: "lidColor",   // H
+    filterLidSize: "lidSize",     // I
+    filterStatus: "status",       // K
+    filterCountry: "country"      // L
+  };
+
+  for (const [selectId, field] of Object.entries(fields)) {
+    const select = document.getElementById(selectId);
+    const values = [...new Set(data.map(item => item[field]).filter(Boolean))].sort();
+
+    values.forEach(value => {
+      const option = document.createElement("option");
+      option.value = value;
+      option.textContent = value;
+      select.appendChild(option);
+    });
+  }
 }
 
-function unique(arr) {
-  return [...new Set(arr)].filter(v => v !== "" && v !== null);
-}
+// ===============================
+// Filtrowanie danych
+// ===============================
 
-function fillSelect(id, values) {
-  const select = document.getElementById(id);
-  values.sort().forEach(v => {
-    const opt = document.createElement("option");
-    opt.value = v;
-    opt.textContent = v;
-    select.appendChild(opt);
+function applyFilters(data) {
+  const filters = {
+    tabColor: document.getElementById("filterTabColor").value,
+    tabType: document.getElementById("filterTabType").value,
+    lidColor: document.getElementById("filterLidColor").value,
+    lidSize: document.getElementById("filterLidSize").value,
+    status: document.getElementById("filterStatus").value,
+    country: document.getElementById("filterCountry").value
+  };
+
+  return data.filter(item => {
+    return (
+      (!filters.tabColor || item.tabColor === filters.tabColor) &&
+      (!filters.tabType || item.tabType === filters.tabType) &&
+      (!filters.lidColor || item.lidColor === filters.lidColor) &&
+      (!filters.lidSize || item.lidSize === filters.lidSize) &&
+      (!filters.status || item.status === filters.status) &&
+      (!filters.country || item.country === filters.country)
+    );
   });
 }
 
-function renderGallery(data) {
+// ===============================
+// Renderowanie galerii
+// ===============================
+
+function renderGallery(items) {
   const gallery = document.getElementById("gallery");
   gallery.innerHTML = "";
 
-  data.forEach(item => {
-    const div = document.createElement("div");
-    div.className = "item";
-    div.innerHTML = `
-      <img src="${item.url}" alt="${item.id}">
-      <p>${item.brand} (${item.year})</p>
-    `;
-    gallery.appendChild(div);
+  items.forEach(item => {
+    const img = document.createElement("img");
+    img.src = item.url; // zakładam, że masz pole "url" z pełnym linkiem R2
+    img.alt = item.filename;
+    img.className = "thumb";
+
+    gallery.appendChild(img);
   });
 }
 
-function applyFilters() {
-  let filtered = items;
+// ===============================
+// Obsługa zmian filtrów
+// ===============================
 
-  const tabColor = document.getElementById("filter-tab-color").value;
-  const tabType = document.getElementById("filter-tab-type").value;
-  const year = document.getElementById("filter-year").value;
-  const brand = document.getElementById("filter-brand").value;
-  const prodCountry = document.getElementById("filter-production-country").value;
-
-  if (tabColor) filtered = filtered.filter(i => i.tab_color === tabColor);
-  if (tabType) filtered = filtered.filter(i => i.tab_type === tabType);
-  if (year) filtered = filtered.filter(i => i.year == year);
-  if (brand) filtered = filtered.filter(i => i.brand === brand);
-  if (prodCountry) filtered = filtered.filter(i => i.production_country === prodCountry);
-
+document.getElementById("filters").addEventListener("change", () => {
+  const filtered = applyFilters(allItems);
   renderGallery(filtered);
-}
-
-document.getElementById("filter-tab-color").onchange = applyFilters;
-document.getElementById("filter-tab-type").onchange = applyFilters;
-document.getElementById("filter-year").onchange = applyFilters;
-document.getElementById("filter-brand").onchange = applyFilters;
-document.getElementById("filter-production-country").onchange = applyFilters;
-
-document.getElementById("reset-filters").onclick = () => {
-  document.querySelectorAll("#filters select").forEach(s => s.value = "");
-  renderGallery(items);
-};
-
-loadGallery();
+});
