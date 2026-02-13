@@ -2,37 +2,31 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
-  <title>Cantab Hunter</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galeria zawleczek</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<h1>Cantab Hunter</h1>
+  <!-- PANEL FILTRÓW -->
+  <section id="filters">
+    <h2>Filtry</h2>
 
-<div id="statsPanel"></div>
+    <div id="filterTabColor"></div>
+    <div id="filterTabType"></div>
+    <div id="filterLidColor"></div>
+    <div id="filterLidSize"></div>
+    <div id="filterCompany"></div>
+    <div id="filterCountry"></div>
+  </section>
 
-<div id="filters">
-  <input type="text" id="searchInput" placeholder="Szukaj: firma, kraj, kolor…">
+  <!-- GALERIA -->
+  <section id="gallery"></section>
 
-  <select id="sortSelect">
-    <option value="">Sortowanie: brak</option>
-    <option value="company">Firma A→Z</option>
-    <option value="country">Kraj A→Z</option>
-    <option value="tabColor">Kolor zawleczki A→Z</option>
-  </select>
+  <!-- STATYSTYKI NA DOLE -->
+  <section id="statsPanel"></section>
 
-  <div id="filterTabColor" class="filter-group"></div>
-  <div id="filterTabType" class="filter-group"></div>
-  <div id="filterLidColor" class="filter-group"></div>
-  <div id="filterLidSize" class="filter-group"></div>
-  <div id="filterCompany" class="filter-group"></div>
-  <div id="filterCountry" class="filter-group"></div>
-</div>
-
-<div id="resultsCount"></div>
-
-<div id="gallery"></div>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
