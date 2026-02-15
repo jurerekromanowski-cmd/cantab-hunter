@@ -170,7 +170,7 @@ function applyFilters() {
     lidColor: getCheckedValues("lidColor"),
     lidSize: getCheckedValues("lidSize"),
     company: getCheckedValues("company"),
-    country: getCheckedValues("country")
+    country: getCheckedValues("country"),
     status: getCheckedValues("status"),
   };
 
