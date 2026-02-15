@@ -222,3 +222,19 @@ function attachFilterEvents() {
     cb.addEventListener("change", applyFilters)
   );
 }
+// --- LIGHTBOX POWIĘKSZANIE ZDJĘĆ ---
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightbox-img");
+
+// Delegacja zdarzeń – działa nawet dla dynamicznie tworzonych elementów
+document.addEventListener("click", (e) => {
+  if (e.target.matches("#gallery img")) {
+    lightboxImg.src = e.target.src;
+    lightbox.style.display = "flex";
+  }
+});
+
+// Zamknięcie po kliknięciu tła
+lightbox.addEventListener("click", () => {
+  lightbox.style.display = "none";
+});
