@@ -184,14 +184,15 @@ function applyFilters() {
 
   const items = document.querySelectorAll(".item");
 
- const match =
-  (filters.tabColor.length === 0 || filters.tabColor.includes(item.dataset.tabcolor)) &&
-  (filters.tabType.length === 0 || filters.tabType.includes(item.dataset.tabtype)) &&
-  (filters.lidColor.length === 0 || filters.lidColor.includes(item.dataset.lidcolor)) &&
-  (filters.lidSize.length === 0 || filters.lidSize.includes(item.dataset.lidsize)) &&
-  (filters.company.length === 0 || filters.company.includes(item.dataset.company)) &&
-  (filters.country.length === 0 || filters.country.includes(item.dataset.country)) &&
-  (filters.status.length === 0 || filters.status.includes(item.dataset.status));
+  items.forEach(item => {
+    const match =
+      (filters.tabColor.length === 0 || filters.tabColor.includes(item.dataset.tabcolor)) &&
+      (filters.tabType.length === 0 || filters.tabType.includes(item.dataset.tabtype)) &&
+      (filters.lidColor.length === 0 || filters.lidColor.includes(item.dataset.lidcolor)) &&
+      (filters.lidSize.length === 0 || filters.lidSize.includes(item.dataset.lidsize)) &&
+      (filters.company.length === 0 || filters.company.includes(item.dataset.company)) &&
+      (filters.country.length === 0 || filters.country.includes(item.dataset.country)) &&
+      (filters.status.length === 0 || filters.status.includes(item.dataset.status));
 
     item.classList.toggle("hidden", !match);
   });
