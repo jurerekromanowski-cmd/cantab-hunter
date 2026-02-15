@@ -226,15 +226,18 @@ function attachFilterEvents() {
 const lightbox = document.getElementById("lightbox");
 const lightboxImg = document.getElementById("lightbox-img");
 
-// Delegacja zdarzeń – działa nawet dla dynamicznie tworzonych elementów
 document.addEventListener("click", (e) => {
   if (e.target.matches("#gallery img")) {
-    lightboxImg.src = e.target.src;
+
+    // jeśli lazy loading jeszcze nie ustawił src, pobierz z data-src
+    const fullSrc = e.target.src || e.target.dataset.src;
+
+    lightboxImg.src = fullSrc;
     lightbox.style.display = "flex";
   }
 });
 
-// Zamknięcie po kliknięciu tła
+// zamykanie lightboxa
 lightbox.addEventListener("click", () => {
   lightbox.style.display = "none";
 });
