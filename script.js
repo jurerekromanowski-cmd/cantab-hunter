@@ -116,42 +116,41 @@ function generateDynamicFilters(data) {
 function renderGallery(items) {
   const gallery = document.getElementById("gallery");
   gallery.innerHTML = "";
+-------------
+ items.forEach((item, index) => {
+  const div = document.createElement("div");
+  div.className = "item";
 
-  items.forEach(item => {
-    const div = document.createElement("div");
-    div.className = "item";
-
-    // dataset do filtrowania
-    div.dataset.tabcolor = item.tabColor || "";
-    div.dataset.tabtype = item.tabType || "";
-    div.dataset.lidcolor = item.lidColor || "";
-    div.dataset.lidsize = item.lidSize || "";
-    div.dataset.company = item.company || "";
-    div.dataset.country = item.country || "";
+      // dataset do filtrowania
+  div.dataset.tabcolor = item.tabColor || "";
+  div.dataset.tabtype = item.tabType || "";
+  div.dataset.lidcolor = item.lidColor || "";
+  div.dataset.lidsize = item.lidSize || "";
+  div.dataset.company = item.company || "";
+  div.dataset.country = item.country || "";
 
     // obrazek
-    const img = document.createElement("img");
-    img.dataset.src = item.url;
-    lazyObserver.observe(img);
+  const img = document.createElement("img");
+  img.dataset.src = item.url;
+  lazyObserver.observe(img);
+ 
+   // flaga
+  const flag = countryFlags[item.country] || "🏳️";
 
-    // flaga
-    const flag = countryFlags[item.country] || "🏳️";
+   // podpis katalogowy
+   const caption = document.createElement("p");
+  caption.innerHTML = `
+    <strong>${item.company || "Unknown"}</strong>
+    #${index + 1} — ${flag} — ${item.tabColor || "unknown"} tab
+  `;
 
-    // podpis katalogowy
-    const caption = document.createElement("p");
-    caption.innerHTML = `
-      <strong>${item.company || "Unknown"}</strong>
-      ${flag} — ${item.tabColor || "unknown"} tab
-    `;
-
-    div.appendChild(img);
-    div.appendChild(caption);
-    gallery.appendChild(div);
-  });
-
+  div.appendChild(img);
+  div.appendChild(caption);
+  gallery.appendChild(div);
+});
+    
   applyFilters();
 }
-
 
 // --- FILTROWANIE ---
 function getCheckedValues(name) {
