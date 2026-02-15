@@ -91,7 +91,8 @@ function generateDynamicFilters(data) {
     lidColor: new Set(),
     lidSize: new Set(),
     company: new Set(),
-    country: new Set()
+    country: new Set(),
+    status: new Set()   // <-- NOWE
   };
 
   data.forEach(i => {
@@ -101,6 +102,7 @@ function generateDynamicFilters(data) {
     if (i.lidSize) sets.lidSize.add(i.lidSize);
     if (i.company) sets.company.add(i.company);
     if (i.country) sets.country.add(i.country);
+    if (i.status) sets.status.add(i.status);   // <-- NOWE
   });
 
   createCheckboxGroup("filterTabColor", "Kolor zawleczki", [...sets.tabColor], "tabColor");
@@ -109,6 +111,7 @@ function generateDynamicFilters(data) {
   createCheckboxGroup("filterLidSize", "Rozmiar wieczka", [...sets.lidSize], "lidSize");
   createCheckboxGroup("filterCompany", "Firma", [...sets.company], "company");
   createCheckboxGroup("filterCountry", "Kraj", [...sets.country], "country");
+  createCheckboxGroup("filterStatus", "Status", [...sets.status], "status");   // <-- NOWE
 }
 
 
@@ -128,6 +131,8 @@ function renderGallery(items) {
     div.dataset.lidsize = item.lidSize || "";
     div.dataset.company = item.company || "";
     div.dataset.country = item.country || "";
+    div.dataset.status = item.status || "";
+
 
     // obrazek
     const img = document.createElement("img");
