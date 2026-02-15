@@ -171,6 +171,7 @@ function applyFilters() {
     lidSize: getCheckedValues("lidSize"),
     company: getCheckedValues("company"),
     country: getCheckedValues("country")
+    status: getCheckedValues("status"),
   };
 
   // Podświetlanie aktywnych filtrów
@@ -191,6 +192,7 @@ function applyFilters() {
       (filters.lidSize.length === 0 || filters.lidSize.includes(item.dataset.lidsize)) &&
       (filters.company.length === 0 || filters.company.includes(item.dataset.company)) &&
       (filters.country.length === 0 || filters.country.includes(item.dataset.country));
+    (filters.status.length === 0 || filters.status.includes(item.dataset.status))
 
     item.classList.toggle("hidden", !match);
   });
