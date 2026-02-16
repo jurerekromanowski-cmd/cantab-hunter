@@ -35,7 +35,6 @@ const countryFlags = {
   "Yemen": "🇾🇪", "Zambia": "🇿🇲", "Zimbabwe": "🇿🇼"
 };
 
-
 // --- GLOBALNE ---
 let allItems = [];
 
@@ -52,14 +51,56 @@ const lazyObserver = new IntersectionObserver((entries, observer) => {
 }, { rootMargin: "200px", threshold: 0.1 });
 
 
+// --- GRUPOWANIE ZDJĘĆ PRZÓD + TYŁ ---
+/**
+ * Grupuje zdjęcia typu:
+ *   - MG_20260216_090105.jpg (przód)
+ *   - MG_20260216_090105a.jpg (tył)
+ *
+ * w jeden obiekt galerii:
+ *   { id: "...", images: [front, back] }
+ *
+ * Dzięki temu galeria wyświetla je jako jeden element (wachlarz),
+ * a nie jako dwa osobne wpisy.
+ */
+function groupFrontBackImages(items) {
+  const map = new Map();
+
+  items.forEach(item => {
+    const url = item.url;
+
+    // wykrywa tył: końcówka "a.jpg"
+    const baseUrl = url.replace(/a(\.[^.]+)$/, "$1");
+    const isBack = /a\.[^.]+$/.test(url);
+
+    if (!map.has(baseUrl)) {
+      // kopiujemy wszystkie dane itema
+      map.set(baseUrl, {
+        ...item,
+        images: []
+      });
+    }
+
+    // front → unshift, back → push
+    map.get(baseUrl).images[isBack ? "push" : "unshift"](url);
+  });
+
+  return Array.from(map.values());
+}
+
+
 // --- WCZYTYWANIE JSON ---
 fetch("data.json?v=" + Date.now())
   .then(r => r.json())
   .then(data => {
-    allItems = data;
-    generateDynamicFilters(data);
+
+    // 1) Grupowanie zdjęć przód/tył
+    allItems = groupFrontBackImages(data);
+
+    // 2) Filtry, galeria, statystyki
+    generateDynamicFilters(allItems);
     renderGallery(allItems);
-    updateStatsPanel(allItems);   // statystyki NA DOLE
+    updateStatsPanel(allItems);
     attachFilterEvents();
   });
 
@@ -67,7 +108,6 @@ fetch("data.json?v=" + Date.now())
 // --- GENEROWANIE CHECKBOXÓW ---
 function createCheckboxGroup(containerId, title, values, name) {
   const container = document.getElementById(containerId);
-  
 
   values.forEach(v => {
     const label = document.createElement("label");
@@ -92,7 +132,7 @@ function generateDynamicFilters(data) {
     lidSize: new Set(),
     company: new Set(),
     country: new Set(),
-    status: new Set()   // <-- NOWE
+    status: new Set()
   };
 
   data.forEach(i => {
@@ -102,7 +142,7 @@ function generateDynamicFilters(data) {
     if (i.lidSize) sets.lidSize.add(i.lidSize);
     if (i.company) sets.company.add(i.company);
     if (i.country) sets.country.add(i.country);
-    if (i.status) sets.status.add(i.status);   // <-- NOWE
+    if (i.status) sets.status.add(i.status);
   });
 
   createCheckboxGroup("filterTabColor", "Kolor zawleczki", [...sets.tabColor], "tabColor");
@@ -111,51 +151,74 @@ function generateDynamicFilters(data) {
   createCheckboxGroup("filterLidSize", "Rozmiar wieczka", [...sets.lidSize], "lidSize");
   createCheckboxGroup("filterCompany", "Firma", [...sets.company], "company");
   createCheckboxGroup("filterCountry", "Kraj", [...sets.country], "country");
-  createCheckboxGroup("filterStatus", "Status", [...sets.status], "status");   // <-- NOWE
+  createCheckboxGroup("filterStatus", "Status", [...sets.status], "status");
 }
 
 
+
+// --- TWORZENIE KAFELKA WACHLARZA ---
+/**
+ * Tworzy kafelek galerii zawierający dwa zdjęcia:
+ * - pierwsze: przód
+ * - drugie: tył
+ *
+ * Oba zdjęcia są renderowane jedno pod drugim,
+ * a CSS nadaje im efekt wachlarza.
+ */
+function createTabTile(tab) {
+  const div = document.createElement("div");
+  div.className = "item";
+
+  // dataset do filtrowania
+  div.dataset.tabcolor = tab.tabColor || "";
+  div.dataset.tabtype = tab.tabType || "";
+  div.dataset.lidcolor = tab.lidColor || "";
+  div.dataset.lidsize = tab.lidSize || "";
+  div.dataset.company = tab.company || "";
+  div.dataset.country = tab.country || "";
+  div.dataset.status = tab.status || "";
+
+  // generowanie dwóch zdjęć (front + back)
+  tab.images.forEach((imgUrl, index) => {
+    const img = document.createElement("img");
+    img.dataset.src = imgUrl;
+    img.className = index === 0 ? "front" : "back";
+    lazyObserver.observe(img);
+    div.appendChild(img);
+  });
+
+  // podpis
+  const caption = document.createElement("p");
+  const flag = countryFlags[tab.country] || "🏳️";
+  caption.innerHTML = `
+    <strong>${tab.company || "Unknown"}</strong>
+    — ${flag} — ${tab.tabColor || "unknown"} tab
+  `;
+  div.appendChild(caption);
+
+  return div;
+}
+
+
+
 // --- RENDER GALERII ---
+/**
+ * Renderuje całą galerię na podstawie listy obiektów
+ * (każdy obiekt może mieć 1 lub 2 zdjęcia).
+ */
 function renderGallery(items) {
   const gallery = document.getElementById("gallery");
   gallery.innerHTML = "";
 
-  items.forEach((item, index) => {
-    const div = document.createElement("div");
-    div.className = "item";
-
-    // dataset do filtrowania
-    div.dataset.tabcolor = item.tabColor || "";
-    div.dataset.tabtype = item.tabType || "";
-    div.dataset.lidcolor = item.lidColor || "";
-    div.dataset.lidsize = item.lidSize || "";
-    div.dataset.company = item.company || "";
-    div.dataset.country = item.country || "";
-    div.dataset.status = item.status || "";
-
-
-    // obrazek
-    const img = document.createElement("img");
-    img.dataset.src = item.url;
-    lazyObserver.observe(img);
-
-    // flaga
-    const flag = countryFlags[item.country] || "🏳️";
-
-    // podpis z numerem zdjęcia
-    const caption = document.createElement("p");
-    caption.innerHTML = `
-      <strong>${item.company || "Unknown"}</strong>
-      #${index + 1} — ${flag} — ${item.tabColor || "unknown"} tab
-    `;
-
-    div.appendChild(img);
-    div.appendChild(caption);
-    gallery.appendChild(div);
+  items.forEach(tab => {
+    const tile = createTabTile(tab);
+    gallery.appendChild(tile);
   });
 
   applyFilters();
 }
+
+
 
 // --- FILTROWANIE ---
 function getCheckedValues(name) {
@@ -197,40 +260,8 @@ function applyFilters() {
     item.classList.toggle("hidden", !match);
   });
 }
-/**
- * Grupuje zdjęcia typu:
- *   - MG_20260216_090105.jpg (przód)
- *   - MG_20260216_090105a.jpg (tył)
- *
- * w jeden obiekt galerii:
- *   { id: "...", images: [front, back] }
- *
- * Dzięki temu galeria wyświetla je jako jeden element (wachlarz),
- * a nie jako dwa osobne wpisy.
- */
-function groupFrontBackImages(files) {
-  const map = new Map();
 
-  files.forEach(file => {
-    // Usuwa końcowe "a" przed rozszerzeniem, np. "xxx a.jpg" → "xxx.jpg"
-    // To pozwala traktować oba pliki jako jedną parę.
-    const base = file.replace(/a(\.[^.]+)$/, '$1');
 
-    // Sprawdza, czy plik jest "tyłem" (kończy się na "a.jpg")
-    const isBack = /a\.[^.]+$/.test(file);
-
-    // Tworzy obiekt dla danej pary, jeśli jeszcze nie istnieje
-    if (!map.has(base)) {
-      map.set(base, { id: base, images: [] });
-    }
-
-    // front → na początek, back → na koniec
-    // (kolejność ważna dla wyświetlania)
-    map.get(base).images[isBack ? 'push' : 'unshift'](file);
-  });
-
-  return Array.from(map.values());
-}
 
 // --- STATYSTYKI ---
 function updateStatsPanel(data) {
@@ -255,12 +286,16 @@ function updateStatsPanel(data) {
 }
 
 
+
 // --- ZDARZENIA ---
 function attachFilterEvents() {
   document.querySelectorAll('#filters input[type="checkbox"]').forEach(cb =>
     cb.addEventListener("change", applyFilters)
   );
 }
+
+
+
 // --- LIGHTBOX POWIĘKSZANIE ZDJĘĆ ---
 const lightbox = document.getElementById("lightbox");
 const lightboxImg = document.getElementById("lightbox-img");
@@ -280,3 +315,4 @@ document.addEventListener("click", (e) => {
 lightbox.addEventListener("click", () => {
   lightbox.style.display = "none";
 });
+
