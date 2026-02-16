@@ -197,7 +197,40 @@ function applyFilters() {
     item.classList.toggle("hidden", !match);
   });
 }
+/**
+ * Grupuje zdjęcia typu:
+ *   - MG_20260216_090105.jpg (przód)
+ *   - MG_20260216_090105a.jpg (tył)
+ *
+ * w jeden obiekt galerii:
+ *   { id: "...", images: [front, back] }
+ *
+ * Dzięki temu galeria wyświetla je jako jeden element (wachlarz),
+ * a nie jako dwa osobne wpisy.
+ */
+function groupFrontBackImages(files) {
+  const map = new Map();
 
+  files.forEach(file => {
+    // Usuwa końcowe "a" przed rozszerzeniem, np. "xxx a.jpg" → "xxx.jpg"
+    // To pozwala traktować oba pliki jako jedną parę.
+    const base = file.replace(/a(\.[^.]+)$/, '$1');
+
+    // Sprawdza, czy plik jest "tyłem" (kończy się na "a.jpg")
+    const isBack = /a\.[^.]+$/.test(file);
+
+    // Tworzy obiekt dla danej pary, jeśli jeszcze nie istnieje
+    if (!map.has(base)) {
+      map.set(base, { id: base, images: [] });
+    }
+
+    // front → na początek, back → na koniec
+    // (kolejność ważna dla wyświetlania)
+    map.get(base).images[isBack ? 'push' : 'unshift'](file);
+  });
+
+  return Array.from(map.values());
+}
 
 // --- STATYSTYKI ---
 function updateStatsPanel(data) {
