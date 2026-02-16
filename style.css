@@ -133,9 +133,9 @@ body {
 
 /* tył — lekko przesunięty */
 .item img.back {
-  margin-top: -10px;
-  transform: translateX(10px);
-  opacity: 0.95;
+  margin-top: -55%;
+  transform: translateX(12px);
+  opacity: 0.92;
   z-index: 1;
 }
 
