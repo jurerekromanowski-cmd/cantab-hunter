@@ -59,9 +59,6 @@ const lazyObserver = new IntersectionObserver((entries, observer) => {
  *
  * w jeden obiekt galerii:
  *   { id: "...", images: [front, back] }
- *
- * Dzięki temu galeria wyświetla je jako jeden element (wachlarz),
- * a nie jako dwa osobne wpisy.
  */
 function groupFrontBackImages(items) {
   const map = new Map();
@@ -74,7 +71,6 @@ function groupFrontBackImages(items) {
     const isBack = /a\.[^.]+$/.test(url);
 
     if (!map.has(baseUrl)) {
-      // kopiujemy wszystkie dane itema
       map.set(baseUrl, {
         ...item,
         images: []
@@ -165,7 +161,7 @@ function generateDynamicFilters(data) {
  * Oba zdjęcia są renderowane jedno pod drugim,
  * a CSS nadaje im efekt wachlarza.
  */
-function createTabTile(tab) {
+function createTabTile(tab, number) {
   const div = document.createElement("div");
   div.className = "item";
 
@@ -192,7 +188,7 @@ function createTabTile(tab) {
   const flag = countryFlags[tab.country] || "🏳️";
   caption.innerHTML = `
     <strong>${tab.company || "Unknown"}</strong>
-    — ${flag} — ${tab.tabColor || "unknown"} tab
+    #${number} — ${flag} — ${tab.tabColor || "unknown"} tab
   `;
   div.appendChild(caption);
 
@@ -210,8 +206,8 @@ function renderGallery(items) {
   const gallery = document.getElementById("gallery");
   gallery.innerHTML = "";
 
-  items.forEach(tab => {
-    const tile = createTabTile(tab);
+  items.forEach((tab, index) => {
+    const tile = createTabTile(tab, index + 1);
     gallery.appendChild(tile);
   });
 
