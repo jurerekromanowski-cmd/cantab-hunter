@@ -140,6 +140,37 @@ body {
 .hidden {
   display: none;
 }
+/* ===========================
+   GALERIA — KAFELKI
+   =========================== */
+/* Kafelek zawierający dwa zdjęcia (przód + tył) */
+.tab-tile {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+}
+
+/* Podstawowy wygląd zdjęć */
+.tab-tile img {
+  width: 100%;
+  display: block;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15); /* delikatny cień */
+}
+
+/* 
+  Zdjęcie "tył":
+  - lekko nachodzi na przód
+  - przesunięte w bok
+  - minimalnie mniejsza przezroczystość
+  Tworzy to efekt wachlarza.
+*/
+.tab-tile img.back {
+  margin-top: -8px;          /* nachodzenie */
+  transform: translateX(10px);
+  opacity: 0.95;
+}
+
 
 /* --- PANEL STATYSTYK NA DOLE --- */
 #statsPanel {
