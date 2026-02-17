@@ -124,6 +124,7 @@ function generateDynamicFilters(data) {
   const sets = {
     tabColor: new Set(),
     tabType: new Set(),
+    tabHole: new Set(),     // <--- NOWY FILTR
     lidColor: new Set(),
     lidSize: new Set(),
     company: new Set(),
@@ -134,6 +135,7 @@ function generateDynamicFilters(data) {
   data.forEach(i => {
     if (i.tabColor) sets.tabColor.add(i.tabColor);
     if (i.tabType) sets.tabType.add(i.tabType);
+    if (i.tabHole) sets.tabHole.add(i.tabHole);   // <--- NOWE
     if (i.lidColor) sets.lidColor.add(i.lidColor);
     if (i.lidSize) sets.lidSize.add(i.lidSize);
     if (i.company) sets.company.add(i.company);
@@ -143,6 +145,9 @@ function generateDynamicFilters(data) {
 
   createCheckboxGroup("filterTabColor", "Kolor zawleczki", [...sets.tabColor], "tabColor");
   createCheckboxGroup("filterTabType", "Typ zawleczki", [...sets.tabType], "tabType");
+
+  createCheckboxGroup("filterTabHole", "Tab hole", [...sets.tabHole], "tabHole");   // <--- NOWY FILTR W ODPOWIEDNIM MIEJSCU
+
   createCheckboxGroup("filterLidColor", "Kolor wieczka", [...sets.lidColor], "lidColor");
   createCheckboxGroup("filterLidSize", "Rozmiar wieczka", [...sets.lidSize], "lidSize");
   createCheckboxGroup("filterCompany", "Firma", [...sets.company], "company");
@@ -153,14 +158,6 @@ function generateDynamicFilters(data) {
 
 
 // --- TWORZENIE KAFELKA WACHLARZA ---
-/**
- * Tworzy kafelek galerii zawierający dwa zdjęcia:
- * - pierwsze: przód
- * - drugie: tył
- *
- * Oba zdjęcia są renderowane jedno pod drugim,
- * a CSS nadaje im efekt wachlarza.
- */
 function createTabTile(tab, number) {
   const div = document.createElement("div");
   div.className = "item";
@@ -168,6 +165,7 @@ function createTabTile(tab, number) {
   // dataset do filtrowania
   div.dataset.tabcolor = tab.tabColor || "";
   div.dataset.tabtype = tab.tabType || "";
+  div.dataset.tabhole = tab.tabHole || "";   // <--- NOWE
   div.dataset.lidcolor = tab.lidColor || "";
   div.dataset.lidsize = tab.lidSize || "";
   div.dataset.company = tab.company || "";
@@ -198,10 +196,6 @@ function createTabTile(tab, number) {
 
 
 // --- RENDER GALERII ---
-/**
- * Renderuje całą galerię na podstawie listy obiektów
- * (każdy obiekt może mieć 1 lub 2 zdjęcia).
- */
 function renderGallery(items) {
   const gallery = document.getElementById("gallery");
   gallery.innerHTML = "";
@@ -226,6 +220,7 @@ function applyFilters() {
   const filters = {
     tabColor: getCheckedValues("tabColor"),
     tabType: getCheckedValues("tabType"),
+    tabHole: getCheckedValues("tabHole"),   // <--- NOWE
     lidColor: getCheckedValues("lidColor"),
     lidSize: getCheckedValues("lidSize"),
     company: getCheckedValues("company"),
@@ -247,6 +242,7 @@ function applyFilters() {
     const match =
       (filters.tabColor.length === 0 || filters.tabColor.includes(item.dataset.tabcolor)) &&
       (filters.tabType.length === 0 || filters.tabType.includes(item.dataset.tabtype)) &&
+      (filters.tabHole.length === 0 || filters.tabHole.includes(item.dataset.tabhole)) &&   // <--- NOWE
       (filters.lidColor.length === 0 || filters.lidColor.includes(item.dataset.lidcolor)) &&
       (filters.lidSize.length === 0 || filters.lidSize.includes(item.dataset.lidsize)) &&
       (filters.company.length === 0 || filters.company.includes(item.dataset.company)) &&
