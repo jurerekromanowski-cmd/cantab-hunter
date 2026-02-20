@@ -133,7 +133,7 @@ body {
 
 /* tył — lekko przesunięty */
 .item img.back {
-  margin-top: -55%;
+  margin-top: -85%;
   transform: translateX(12px);
   opacity: 0.92;
   z-index: 1;
