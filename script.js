@@ -103,6 +103,10 @@ fetch("data.json?v=" + Date.now())
 
 // --- GENEROWANIE CHECKBOXÓW ---
 function createCheckboxGroup(containerId, title, values, name) {
+  values = [...values]
+    .filter(v => v && v.trim() !== "")
+    .sort((a, b) => a.localeCompare(b));
+  
   const container = document.getElementById(containerId);
 
   values.forEach(v => {
