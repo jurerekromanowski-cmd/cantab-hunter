@@ -155,7 +155,7 @@ function generateDynamicFilters(data) {
   createCheckboxGroup("filterLidColor", "Lid color", [...sets.lidColor], "lidColor");
   createCheckboxGroup("filterLidSize", "Lid size", [...sets.lidSize], "lidSize");
   createCheckboxGroup("filterCompany", "Firma", [...sets.company], "company");
-  createCheckboxGroup("filterCountry", "Kraj", [...sets.country], "country");
+  createCheckboxGroup("filterCountry", "Country", [...sets.country], "country");
   createCheckboxGroup("filterStatus", "Status", [...sets.status], "status");
 }
 
