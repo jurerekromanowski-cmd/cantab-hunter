@@ -143,13 +143,13 @@ function generateDynamicFilters(data) {
     if (i.status) sets.status.add(i.status);
   });
 
-  createCheckboxGroup("filterTabColor", "Kolor zawleczki", [...sets.tabColor], "tabColor");
-  createCheckboxGroup("filterTabType", "Typ zawleczki", [...sets.tabType], "tabType");
+  createCheckboxGroup("filterTabColor", "Tab color", [...sets.tabColor], "tabColor");
+  createCheckboxGroup("filterTabType", "Tab type", [...sets.tabType], "tabType");
 
   createCheckboxGroup("filterTabHole", "Tab hole", [...sets.tabHole], "tabHole");   // <--- NOWY FILTR W ODPOWIEDNIM MIEJSCU
 
-  createCheckboxGroup("filterLidColor", "Kolor wieczka", [...sets.lidColor], "lidColor");
-  createCheckboxGroup("filterLidSize", "Rozmiar wieczka", [...sets.lidSize], "lidSize");
+  createCheckboxGroup("filterLidColor", "Lid color", [...sets.lidColor], "lidColor");
+  createCheckboxGroup("filterLidSize", "Lid size", [...sets.lidSize], "lidSize");
   createCheckboxGroup("filterCompany", "Firma", [...sets.company], "company");
   createCheckboxGroup("filterCountry", "Kraj", [...sets.country], "country");
   createCheckboxGroup("filterStatus", "Status", [...sets.status], "status");
