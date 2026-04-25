@@ -189,7 +189,7 @@ function createTabTile(tab, number) {
   const caption = document.createElement("p");
   const flag = countryFlags[tab.country] || "🏳️";
   caption.innerHTML = `
-    <strong>${tab.company || "Unknown"}</strong>
+   <strong>${tab.company ?? ""}</strong>
     #${number} — ${flag} — ${tab.tabColor || "unknown"} tab
   `;
   div.appendChild(caption);
