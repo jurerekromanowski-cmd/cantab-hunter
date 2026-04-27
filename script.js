@@ -38,7 +38,6 @@ const countryFlags = {
 // --- GLOBALNE ---
 let allItems = [];
 
-
 // --- LAZY LOADING ---
 const lazyObserver = new IntersectionObserver((entries, observer) => {
   entries.forEach(entry => {
@@ -50,69 +49,46 @@ const lazyObserver = new IntersectionObserver((entries, observer) => {
   });
 }, { rootMargin: "200px", threshold: 0.1 });
 
-
-// --- GRUPOWANIE ZDJĘĆ PRZÓD + TYŁ ---
-/**
- * Grupuje zdjęcia typu:
- *   - MG_20260216_090105.jpg (przód)
- *   - MG_20260216_090105a.jpg (tył)
- *
- * w jeden obiekt galerii:
- *   { id: "...", images: [front, back] }
- */
+// --- GRUPOWANIE PRZÓD + TYŁ ---
 function groupFrontBackImages(items) {
   const map = new Map();
 
   items.forEach(item => {
     const url = item.url;
-
-    // wykrywa tył: końcówka "a.jpg"
     const baseUrl = url.replace(/a(\.[^.]+)$/, "$1");
     const isBack = /a\.[^.]+$/.test(url);
 
     if (!map.has(baseUrl)) {
-      map.set(baseUrl, {
-        ...item,
-        images: []
-      });
+      map.set(baseUrl, { ...item, images: [] });
     }
 
-    // front → unshift, back → push
     map.get(baseUrl).images[isBack ? "push" : "unshift"](url);
   });
 
   return Array.from(map.values());
 }
 
-
 // --- WCZYTYWANIE JSON ---
 fetch("data.json?v=" + Date.now())
   .then(r => r.json())
   .then(data => {
-
-    // 1) Grupowanie zdjęć przód/tył
     allItems = groupFrontBackImages(data);
-
-    // 2) Filtry, galeria, statystyki
     generateDynamicFilters(allItems);
     renderGallery(allItems);
     updateStatsPanel(allItems);
     attachFilterEvents();
   });
 
-
 // --- GENEROWANIE CHECKBOXÓW ---
 function createCheckboxGroup(containerId, title, values, name) {
   values = [...values]
     .filter(v => v && v.trim() !== "")
     .sort((a, b) => a.localeCompare(b));
-  
+
   const container = document.getElementById(containerId);
 
   values.forEach(v => {
     const label = document.createElement("label");
-    label.style.display = "block";
-
     const cb = document.createElement("input");
     cb.type = "checkbox";
     cb.name = name;
@@ -128,7 +104,7 @@ function generateDynamicFilters(data) {
   const sets = {
     tabColor: new Set(),
     tabType: new Set(),
-    tabHole: new Set(),     // <--- NOWY FILTR
+    tabHole: new Set(),
     lidColor: new Set(),
     lidSize: new Set(),
     company: new Set(),
@@ -139,7 +115,7 @@ function generateDynamicFilters(data) {
   data.forEach(i => {
     if (i.tabColor) sets.tabColor.add(i.tabColor);
     if (i.tabType) sets.tabType.add(i.tabType);
-    if (i.tabHole) sets.tabHole.add(i.tabHole);   // <--- NOWE
+    if (i.tabHole) sets.tabHole.add(i.tabHole);
     if (i.lidColor) sets.lidColor.add(i.lidColor);
     if (i.lidSize) sets.lidSize.add(i.lidSize);
     if (i.company) sets.company.add(i.company);
@@ -149,34 +125,28 @@ function generateDynamicFilters(data) {
 
   createCheckboxGroup("filterTabColor", "Tab color", [...sets.tabColor], "tabColor");
   createCheckboxGroup("filterTabType", "Tab type", [...sets.tabType], "tabType");
-
-  createCheckboxGroup("filterTabHole", "Tab hole", [...sets.tabHole], "tabHole");   // <--- NOWY FILTR W ODPOWIEDNIM MIEJSCU
-
+  createCheckboxGroup("filterTabHole", "Tab hole", [...sets.tabHole], "tabHole");
   createCheckboxGroup("filterLidColor", "Lid color", [...sets.lidColor], "lidColor");
   createCheckboxGroup("filterLidSize", "Lid size", [...sets.lidSize], "lidSize");
-  createCheckboxGroup("filterCompany", "Firma", [...sets.company], "company");
+  createCheckboxGroup("filterCompany", "Company", [...sets.company], "company");
   createCheckboxGroup("filterCountry", "Country", [...sets.country], "country");
   createCheckboxGroup("filterStatus", "Status", [...sets.status], "status");
 }
 
-
-
-// --- TWORZENIE KAFELKA WACHLARZA ---
+// --- TWORZENIE KAFELKA ---
 function createTabTile(tab, number) {
   const div = document.createElement("div");
   div.className = "item";
 
-  // dataset do filtrowania
   div.dataset.tabcolor = tab.tabColor || "";
   div.dataset.tabtype = tab.tabType || "";
-  div.dataset.tabhole = tab.tabHole || "";   // <--- NOWE
+  div.dataset.tabhole = tab.tabHole || "";
   div.dataset.lidcolor = tab.lidColor || "";
   div.dataset.lidsize = tab.lidSize || "";
   div.dataset.company = tab.company || "";
   div.dataset.country = tab.country || "";
   div.dataset.status = tab.status || "";
 
-  // generowanie dwóch zdjęć (front + back)
   tab.images.forEach((imgUrl, index) => {
     const img = document.createElement("img");
     img.dataset.src = imgUrl;
@@ -185,19 +155,16 @@ function createTabTile(tab, number) {
     div.appendChild(img);
   });
 
-  // podpis
   const caption = document.createElement("p");
   const flag = countryFlags[tab.country] || "🏳️";
   caption.innerHTML = `
-   <strong>${tab.company ?? ""}</strong>
+    <strong>${tab.company ?? ""}</strong>
     #${number} — ${flag} — ${tab.tabColor || "unknown"} tab
   `;
   div.appendChild(caption);
 
   return div;
 }
-
-
 
 // --- RENDER GALERII ---
 function renderGallery(items) {
@@ -212,8 +179,6 @@ function renderGallery(items) {
   applyFilters();
 }
 
-
-
 // --- FILTROWANIE ---
 function getCheckedValues(name) {
   return [...document.querySelectorAll(`input[name="${name}"]:checked`)]
@@ -224,7 +189,7 @@ function applyFilters() {
   const filters = {
     tabColor: getCheckedValues("tabColor"),
     tabType: getCheckedValues("tabType"),
-    tabHole: getCheckedValues("tabHole"),   // <--- NOWE
+    tabHole: getCheckedValues("tabHole"),
     lidColor: getCheckedValues("lidColor"),
     lidSize: getCheckedValues("lidSize"),
     company: getCheckedValues("company"),
@@ -232,12 +197,25 @@ function applyFilters() {
     status: getCheckedValues("status"),
   };
 
-  // Podświetlanie aktywnych filtrów
+  const search = document.getElementById("searchInput")?.value.toLowerCase() || "";
+
+  const matchesSearch = (item) => {
+    return (
+      item.dataset.company.toLowerCase().includes(search) ||
+      item.dataset.country.toLowerCase().includes(search) ||
+      item.dataset.tabcolor.toLowerCase().includes(search) ||
+      item.dataset.tabtype.toLowerCase().includes(search) ||
+      item.dataset.tabhole.toLowerCase().includes(search) ||
+      item.dataset.lidcolor.toLowerCase().includes(search) ||
+      item.dataset.lidsize.toLowerCase().includes(search) ||
+      item.dataset.status.toLowerCase().includes(search)
+    );
+  };
+
   document.querySelectorAll(".filterBox").forEach(box => {
     const inputs = box.querySelectorAll("input[type='checkbox']");
     const anyChecked = [...inputs].some(cb => cb.checked);
-    const summary = box.querySelector("summary");
-    summary.classList.toggle("active", anyChecked);
+    box.querySelector("summary").classList.toggle("active", anyChecked);
   });
 
   const items = document.querySelectorAll(".item");
@@ -246,18 +224,17 @@ function applyFilters() {
     const match =
       (filters.tabColor.length === 0 || filters.tabColor.includes(item.dataset.tabcolor)) &&
       (filters.tabType.length === 0 || filters.tabType.includes(item.dataset.tabtype)) &&
-      (filters.tabHole.length === 0 || filters.tabHole.includes(item.dataset.tabhole)) &&   // <--- NOWE
+      (filters.tabHole.length === 0 || filters.tabHole.includes(item.dataset.tabhole)) &&
       (filters.lidColor.length === 0 || filters.lidColor.includes(item.dataset.lidcolor)) &&
       (filters.lidSize.length === 0 || filters.lidSize.includes(item.dataset.lidsize)) &&
       (filters.company.length === 0 || filters.company.includes(item.dataset.company)) &&
       (filters.country.length === 0 || filters.country.includes(item.dataset.country)) &&
-      (filters.status.length === 0 || filters.status.includes(item.dataset.status));
+      (filters.status.length === 0 || filters.status.includes(item.dataset.status)) &&
+      matchesSearch(item);
 
     item.classList.toggle("hidden", !match);
   });
 }
-
-
 
 // --- STATYSTYKI ---
 function updateStatsPanel(data) {
@@ -281,8 +258,6 @@ function updateStatsPanel(data) {
   `;
 }
 
-
-
 // --- ZDARZENIA ---
 function attachFilterEvents() {
   document.querySelectorAll('#filters input[type="checkbox"]').forEach(cb =>
@@ -290,25 +265,20 @@ function attachFilterEvents() {
   );
 }
 
+document.getElementById("searchInput")?.addEventListener("input", applyFilters);
 
-
-// --- LIGHTBOX POWIĘKSZANIE ZDJĘĆ ---
+// --- LIGHTBOX ---
 const lightbox = document.getElementById("lightbox");
 const lightboxImg = document.getElementById("lightbox-img");
 
 document.addEventListener("click", (e) => {
   if (e.target.matches("#gallery img")) {
-
-    // jeśli lazy loading jeszcze nie ustawił src, pobierz z data-src
     const fullSrc = e.target.src || e.target.dataset.src;
-
     lightboxImg.src = fullSrc;
     lightbox.style.display = "flex";
   }
 });
 
-// zamykanie lightboxa
 lightbox.addEventListener("click", () => {
   lightbox.style.display = "none";
 });
-
