@@ -8,20 +8,18 @@
 </head>
 
 <body>
-<body>
 
-  <!-- SEARCH BOX -->
- <div class="search-container">
+<!-- GLOBALNA PUŁAPKA AUTOFILL -->
+<input 
+  type="text" 
+  autocomplete="username"
+  style="opacity:0; height:0; position:absolute; pointer-events:none;"
+>
+
+<!-- SEARCH BOX -->
+<div class="search-container">
   <span class="search-icon">🔍</span>
 
-  <!-- PUŁAPKA AUTOFILL – przechwytuje ikony klucza/karty -->
-  <input 
-    type="text" 
-    autocomplete="username"
-    style="opacity:0; height:0; position:absolute; pointer-events:none;"
-  >
-
-  <!-- PRAWDZIWE POLE SEARCH -->
   <input 
     type="text" 
     id="searchInput" 
@@ -35,8 +33,7 @@
   >
 </div>
 
-
-   <!-- PANEL FILTRÓW -->
+     <!-- PANEL FILTRÓW -->
   <section id="filters">
     <h2>Filters</h2>
 
