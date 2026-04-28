@@ -243,3 +243,28 @@ body {
   box-shadow: 0 0 4px rgba(0, 120, 255, 0.4);
   outline: none;
 }
+/* --- MOBILE: filtry w dwóch kolumnach + zwijane boxy --- */
+@media (max-width: 600px) {
+  #filtersGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  details.filterBox {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 6px;
+    background: #f8f8f8;
+  }
+
+  details.filterBox summary {
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  details.filterBox div {
+    margin-top: 6px;
+  }
+}
