@@ -11,21 +11,30 @@
 <body>
 
   <!-- SEARCH BOX -->
-  <div class="search-container">
-    <span class="search-icon">🔍</span>
-   <input 
-  type="text" 
-  id="searchInput" 
-  placeholder="Search..." 
-  autocomplete="new-password"
-  name="search-no-autofill"
-  inputmode="search"
-  autocorrect="off"
-  autocapitalize="off"
-  spellcheck="false"
-/>
+ <div class="search-container">
+  <span class="search-icon">🔍</span>
 
-  </div>
+  <!-- PUŁAPKA AUTOFILL – przechwytuje ikony klucza/karty -->
+  <input 
+    type="text" 
+    autocomplete="username"
+    style="opacity:0; height:0; position:absolute; pointer-events:none;"
+  >
+
+  <!-- PRAWDZIWE POLE SEARCH -->
+  <input 
+    type="text" 
+    id="searchInput" 
+    placeholder="Search..." 
+    autocomplete="off"
+    name="search-no-autofill"
+    inputmode="search"
+    autocorrect="off"
+    autocapitalize="off"
+    spellcheck="false"
+  >
+</div>
+
 
    <!-- PANEL FILTRÓW -->
   <section id="filters">
