@@ -49,44 +49,11 @@ const lazyObserver = new IntersectionObserver((entries, observer) => {
   });
 }, { rootMargin: "200px", threshold: 0.1 });
 
-// --- GRUPOWANIE PRZÓD + TYŁ ---
-// (tu zaczyna się Twój prawdziwy kod, który był wcześniej)
-
-// --- LAZY LOADING ---
-const lazyObserver = new IntersectionObserver((entries, observer) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const img = entry.target;
-      img.src = img.dataset.src;
-      observer.unobserve(img);
-    }
-  });
-}, { rootMargin: "200px", threshold: 0.1 });
-
-// --- GRUPOWANIE PRZÓD + TYŁ ---
-function groupFrontBackImages(items) {
-  const map = new Map();
-
-  items.forEach(item => {
-    const url = item.url;
-    const baseUrl = url.replace(/a(\.[^.]+)$/, "$1");
-    const isBack = /a\.[^.]+$/.test(url);
-
-    if (!map.has(baseUrl)) {
-      map.set(baseUrl, { ...item, images: [] });
-    }
-
-    map.get(baseUrl).images[isBack ? "push" : "unshift"](url);
-  });
-
-  return Array.from(map.values());
-}
-
 // --- WCZYTYWANIE JSON ---
 fetch("data.json?v=" + Date.now())
   .then(r => r.json())
   .then(data => {
-    allItems = groupFrontBackImages(data);
+    allItems = data; // JSON już ma images
     generateDynamicFilters(allItems);
     renderGallery(allItems);
     updateStatsPanel(allItems);
@@ -142,7 +109,7 @@ function generateDynamicFilters(data) {
   createCheckboxGroup("filterTabHole", "Tab hole", [...sets.tabHole], "tabHole");
   createCheckboxGroup("filterLidColor", "Lid color", [...sets.lidColor], "lidColor");
   createCheckboxGroup("filterLidSize", "Lid size", [...sets.lidSize], "lidSize");
-   createCheckboxGroup("filterCountry", "Country", [...sets.country], "country");
+  createCheckboxGroup("filterCountry", "Country", [...sets.country], "country");
   createCheckboxGroup("filterStatus", "Status", [...sets.status], "status");
 }
 
@@ -161,11 +128,10 @@ function createTabTile(tab, number) {
   div.dataset.country = tab.country || "";
   div.dataset.status = tab.status || "";
 
-  // --- POPRAWIONE W 100% ---
   tab.images.forEach((imgUrl, index) => {
     const img = document.createElement("img");
-    img.dataset.src = imgUrl;                 // ← poprawione
-    img.className = index === 0 ? "front" : "back"; // ← poprawione
+    img.dataset.src = imgUrl;
+    img.className = index === 0 ? "front" : "back";
     lazyObserver.observe(img);
     div.appendChild(img);
   });
@@ -237,18 +203,17 @@ function applyFilters() {
   const items = document.querySelectorAll(".item");
 
   items.forEach(item => {
-   const match =
-  (filters.tabColor.length === 0 || filters.tabColor.includes(item.dataset.tabcolor)) &&
-  (filters.tabType.length === 0 || filters.tabType.includes(item.dataset.tabtype)) &&
-  (filters.tabHole.length === 0 || filters.tabHole.includes(item.dataset.tabhole)) &&
-  (filters.lidColor.length === 0 || filters.lidColor.includes(item.dataset.lidcolor)) &&
-  (filters.lidSize.length === 0 || filters.lidSize.includes(item.dataset.lidsize)) &&
-  (filters.company.length === 0 || filters.company.includes(item.dataset.company)) &&
-  (filters.country.length === 0 || filters.country.includes(item.dataset.country)) &&
-  (filters.status.length === 0 || filters.status.includes(item.dataset.status)) &&
-  (!filters.tabOnly || item.dataset.istabonly === "true") &&
-  matchesSearch(item);
-
+    const match =
+      (filters.tabColor.length === 0 || filters.tabColor.includes(item.dataset.tabcolor)) &&
+      (filters.tabType.length === 0 || filters.tabType.includes(item.dataset.tabtype)) &&
+      (filters.tabHole.length === 0 || filters.tabHole.includes(item.dataset.tabhole)) &&
+      (filters.lidColor.length === 0 || filters.lidColor.includes(item.dataset.lidcolor)) &&
+      (filters.lidSize.length === 0 || filters.lidSize.includes(item.dataset.lidsize)) &&
+      (filters.company.length === 0 || filters.company.includes(item.dataset.company)) &&
+      (filters.country.length === 0 || filters.country.includes(item.dataset.country)) &&
+      (filters.status.length === 0 || filters.status.includes(item.dataset.status)) &&
+      (!filters.tabOnly || item.dataset.istabonly === "true") &&
+      matchesSearch(item);
 
     item.classList.toggle("hidden", !match);
   });
