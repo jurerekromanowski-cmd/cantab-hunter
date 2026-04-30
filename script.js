@@ -222,16 +222,17 @@ function applyFilters() {
 
   items.forEach(item => {
     const match =
-      (filters.tabColor.length === 0 || filters.tabColor.includes(item.dataset.tabcolor)) &&
-      (filters.tabType.length === 0 || filters.tabType.includes(item.dataset.tabtype)) &&
-      (filters.tabHole.length === 0 || filters.tabHole.includes(item.dataset.tabhole)) &&
-      (filters.lidColor.length === 0 || filters.lidColor.includes(item.dataset.lidcolor)) &&
-      (filters.lidSize.length === 0 || filters.lidSize.includes(item.dataset.lidsize)) &&
-      (filters.company.length === 0 || filters.company.includes(item.dataset.company)) &&
-      (filters.country.length === 0 || filters.country.includes(item.dataset.country)) &&
-      (filters.status.length === 0 || filters.status.includes(item.dataset.status)) &&
-        (!filters.tabOnly || item.dataset.istabonly === "true")&&
-      matchesSearch(item);
+  (filters.tabColor.length === 0 || filters.tabColor.includes(item.dataset.tabcolor)) &&
+  (filters.tabType.length === 0 || filters.tabType.includes(item.dataset.tabtype)) &&
+  (filters.tabHole.length === 0 || filters.tabHole.includes(item.dataset.tabhole)) &&
+  (filters.lidColor.length === 0 || filters.lidColor.includes(item.dataset.lidcolor)) &&
+  (filters.lidSize.length === 0 || filters.lidSize.includes(item.dataset.lidsize)) &&
+  (filters.company.length === 0 || filters.company.includes(item.dataset.company)) &&
+  (filters.country.length === 0 || filters.country.includes(item.dataset.country)) &&
+  (filters.status.length === 0 || filters.status.includes(item.dataset.status)) &&
+  (!filters.tabOnly || item.dataset.istabonly === "true") &&
+  matchesSearch(item);
+
 
     item.classList.toggle("hidden", !match);
   });
