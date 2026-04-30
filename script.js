@@ -136,7 +136,7 @@ function generateDynamicFilters(data) {
 function createTabTile(tab, number) {
   const div = document.createElement("div");
   div.className = "item";
-
+div.dataset.istabonly = tab.isTabOnly;
   div.dataset.tabcolor = tab.tabColor || "";
   div.dataset.tabtype = tab.tabType || "";
   div.dataset.tabhole = tab.tabHole || "";
@@ -194,6 +194,7 @@ function applyFilters() {
     company: getCheckedValues("company"),
     country: getCheckedValues("country"),
     status: getCheckedValues("status"),
+    tabOnly: document.getElementById("filterTabOnly").checked,
   };
 
   const search = document.getElementById("searchInput")?.value.toLowerCase() || "";
@@ -229,6 +230,7 @@ function applyFilters() {
       (filters.company.length === 0 || filters.company.includes(item.dataset.company)) &&
       (filters.country.length === 0 || filters.country.includes(item.dataset.country)) &&
       (filters.status.length === 0 || filters.status.includes(item.dataset.status)) &&
+        (!filters.tabOnly || item.dataset.isTabonly === "true");
       matchesSearch(item);
 
     item.classList.toggle("hidden", !match);
