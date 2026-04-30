@@ -148,10 +148,11 @@ div.dataset.istabonly = tab.isTabOnly;
 
   tab.images.forEach((imgUrl, index) => {
     const img = document.createElement("img");
-    img.dataset.src = imgUrl;
-    img.className = index === 0 ? "front" : "back";
-    lazyObserver.observe(img);
-    div.appendChild(img);
+img.dataset.src = tab.url;
+img.className = "front";
+lazyObserver.observe(img);
+div.appendChild(img);
+
   });
 
   const caption = document.createElement("p");
