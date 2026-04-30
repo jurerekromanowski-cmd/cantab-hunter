@@ -150,7 +150,8 @@ function generateDynamicFilters(data) {
 function createTabTile(tab, number) {
   const div = document.createElement("div");
   div.className = "item";
-div.dataset.istabonly = tab.isTabOnly;
+
+  div.dataset.istabonly = tab.isTabOnly;
   div.dataset.tabcolor = tab.tabColor || "";
   div.dataset.tabtype = tab.tabType || "";
   div.dataset.tabhole = tab.tabHole || "";
@@ -160,13 +161,13 @@ div.dataset.istabonly = tab.isTabOnly;
   div.dataset.country = tab.country || "";
   div.dataset.status = tab.status || "";
 
+  // --- POPRAWIONE W 100% ---
   tab.images.forEach((imgUrl, index) => {
     const img = document.createElement("img");
-img.dataset.src = tab.url;
-img.className = "front";
-lazyObserver.observe(img);
-div.appendChild(img);
-
+    img.dataset.src = imgUrl;                 // ← poprawione
+    img.className = index === 0 ? "front" : "back"; // ← poprawione
+    lazyObserver.observe(img);
+    div.appendChild(img);
   });
 
   const caption = document.createElement("p");
