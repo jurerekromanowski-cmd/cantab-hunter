@@ -221,7 +221,7 @@ function applyFilters() {
   const items = document.querySelectorAll(".item");
 
   items.forEach(item => {
-    const match =
+   const match =
   (filters.tabColor.length === 0 || filters.tabColor.includes(item.dataset.tabcolor)) &&
   (filters.tabType.length === 0 || filters.tabType.includes(item.dataset.tabtype)) &&
   (filters.tabHole.length === 0 || filters.tabHole.includes(item.dataset.tabhole)) &&
