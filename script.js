@@ -230,7 +230,7 @@ function applyFilters() {
       (filters.company.length === 0 || filters.company.includes(item.dataset.company)) &&
       (filters.country.length === 0 || filters.country.includes(item.dataset.country)) &&
       (filters.status.length === 0 || filters.status.includes(item.dataset.status)) &&
-        (!filters.tabOnly || item.dataset.isTabonly === "true");
+        (!filters.tabOnly || item.dataset.istabonly === "true")&&
       matchesSearch(item);
 
     item.classList.toggle("hidden", !match);
