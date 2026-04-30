@@ -50,6 +50,20 @@ const lazyObserver = new IntersectionObserver((entries, observer) => {
 }, { rootMargin: "200px", threshold: 0.1 });
 
 // --- GRUPOWANIE PRZÓD + TYŁ ---
+// (tu zaczyna się Twój prawdziwy kod, który był wcześniej)
+
+// --- LAZY LOADING ---
+const lazyObserver = new IntersectionObserver((entries, observer) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const img = entry.target;
+      img.src = img.dataset.src;
+      observer.unobserve(img);
+    }
+  });
+}, { rootMargin: "200px", threshold: 0.1 });
+
+// --- GRUPOWANIE PRZÓD + TYŁ ---
 function groupFrontBackImages(items) {
   const map = new Map();
 
