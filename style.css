@@ -269,3 +269,9 @@ body {
     margin-top: 6px;
   }
 }
+@media (max-width: 600px) {
+  .item img.back {
+    margin-top: -65%; /* zamiast -85% */
+    transform: translateX(8px);
+  }
+}
