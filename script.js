@@ -129,12 +129,18 @@ function createTabTile(tab, number) {
   div.dataset.status = tab.status || "";
 
   tab.images.forEach((imgUrl, index) => {
-    const img = document.createElement("img");
-    img.dataset.src = imgUrl;
-    img.className = index === 0 ? "front" : "back";
-    lazyObserver.observe(img);
-    div.appendChild(img);
-  });
+  if (!imgUrl || imgUrl.trim() === "") return;
+
+  // Jeśli to rewers, ale nazwa nie kończy się na "a", pomijamy
+  if (index === 1 && !imgUrl.toLowerCase().endsWith("a.jpg")) return;
+
+  const img = document.createElement("img");
+  img.dataset.src = imgUrl;
+  img.className = index === 0 ? "front" : "back";
+  lazyObserver.observe(img);
+  div.appendChild(img);
+});
+
 
   const caption = document.createElement("p");
   const flag = countryFlags[tab.country] || "🏳️";
