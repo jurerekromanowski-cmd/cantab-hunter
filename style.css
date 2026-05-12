@@ -275,3 +275,31 @@ body {
     transform: translateX(8px);
   }
 }
+#contacts .contact-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.insta-icon {
+  width: 22px;
+  height: 22px;
+  fill: #d6249f; /* Instagram pink */
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.contact-item a {
+  color: #0077cc;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.contact-item a:hover {
+  text-decoration: underline;
+}
+
+.contact-item:hover .insta-icon {
+  transform: scale(1.15);
+  opacity: 0.85;
+}
